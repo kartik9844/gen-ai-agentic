@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI: Brain. Memory. Actions. — Kartik Joshi | BVB College</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+/* === PASTEL GEOMETRY THEME === */
+:root {
+  --bg: #c8d9e6;
+  --card: #faf9f7;
+  --text: #1a1a1a;
+  --muted: #666;
+  --light: #888;
+  --p1: #f0b4d4; --p2: #a8d4c4; --p3: #9b8dc4; --p4: #5a7c6a; --p5: #7c6aad;
+  --p6: #f5c4a0; --p7: #a8c8e8;
+  --font: 'Plus Jakarta Sans', sans-serif;
+  --ease-b: cubic-bezier(0.34,1.56,0.64,1);
+  --ease-s: cubic-bezier(0.16,1,0.3,1);
+  --r: clamp(12px,1.5vw,18px);
+  --pad: clamp(1.2rem,3.5vw,3.2rem);
+  --gap: clamp(0.5rem,1.4vw,1.4rem);
+  --t1: clamp(1.5rem,4.5vw,3.8rem);
+  --t2: clamp(1.1rem,2.8vw,2.1rem);
+  --t3: clamp(0.9rem,1.8vw,1.35rem);
+  --tb: clamp(0.72rem,1.3vw,1rem);
+  --ts: clamp(0.62rem,0.95vw,0.82rem);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow-x:hidden;font-family:var(--font)}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{background:var(--bg)}
+
+/* === VIEWPORT BASE (MANDATORY) === */
+.slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;background:var(--bg)}
+
+@media(max-height:700px){:root{--pad:clamp(0.8rem,3vw,2rem);--gap:clamp(0.35rem,1.2vw,0.9rem);--t1:clamp(1.2rem,4vw,2.4rem);--t2:clamp(0.95rem,2.5vw,1.6rem);--tb:clamp(0.65rem,1.1vw,0.88rem)}}
+@media(max-height:600px){:root{--pad:clamp(0.5rem,2.5vw,1.4rem);--t1:clamp(1rem,3.5vw,1.9rem);--tb:clamp(0.6rem,1vw,0.82rem)}.nav-hint{display:none}}
+@media(max-height:500px){:root{--pad:clamp(0.4rem,2vw,1rem);--t1:clamp(0.9rem,3vw,1.4rem);--t2:clamp(0.8rem,2vw,1.1rem)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}html{scroll-behavior:auto}}
+
+/* === PROGRESS BAR === */
+#progress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--p1),var(--p3),var(--p5));z-index:999;transition:width .3s ease;pointer-events:none}
+#counter{position:fixed;bottom:clamp(8px,1.5vh,16px);right:clamp(12px,2vw,22px);font-size:var(--ts);color:rgba(26,26,26,.4);font-weight:600;z-index:999;pointer-events:none}
+
+/* === CARD === */
+.card{width:min(91vw,1060px);max-height:min(85vh,640px);background:var(--card);border-radius:var(--r);box-shadow:0 8px 40px rgba(0,0,0,.09),0 2px 6px rgba(0,0,0,.04);display:flex;overflow:hidden;position:relative}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent,var(--p3));border-radius:var(--r) 0 0 var(--r)}
+.card-inner{flex:1;padding:var(--pad);padding-left:calc(var(--pad) + 5px);display:flex;flex-direction:column;justify-content:center;gap:var(--gap);overflow:hidden}
+.pills{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(5px,.7vh,9px);padding:clamp(12px,2vw,22px) clamp(9px,1.3vw,16px);width:clamp(26px,3.5vw,44px)}
+.pill{border-radius:6px;width:clamp(7px,1vw,12px);flex-shrink:0}
+.p1{background:var(--p1);height:clamp(24px,3.5vh,42px)}.p2{background:var(--p2);height:clamp(42px,6.5vh,72px)}.p3{background:var(--p3);height:clamp(58px,9vh,96px)}.p4{background:var(--p4);height:clamp(42px,6.5vh,72px)}.p5{background:var(--p5);height:clamp(24px,3.5vh,42px)}
+
+/* === TYPOGRAPHY === */
+.label{font-size:var(--ts);font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent,var(--p3))}
+.heading{font-size:var(--t2);font-weight:800;color:var(--text);line-height:1.2}
+.body-text{font-size:var(--tb);color:var(--muted);line-height:1.5}
+.strong{color:var(--text);font-weight:700}
+
+ul.blist{list-style:none;display:flex;flex-direction:column;gap:clamp(.28rem,.6vh,.75rem);overflow:hidden}
+ul.blist li{font-size:var(--tb);color:var(--muted);padding-left:clamp(16px,2.2vw,26px);position:relative;line-height:1.45}
+ul.blist li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:clamp(5px,.7vw,9px);height:clamp(5px,.7vw,9px);border-radius:50%;background:var(--accent,var(--p3))}
+ul.blist li strong{color:var(--text);font-weight:700}
+
+/* === SECTION DIVIDERS === */
+.divider{background:var(--dbg,#ede8f8)}
+.dcard{width:min(86vw,860px);max-height:min(72vh,480px);background:white;border-radius:var(--r);box-shadow:0 10px 44px rgba(0,0,0,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(.5rem,1.3vh,1.3rem);padding:clamp(2rem,5vw,4.5rem);text-align:center;position:relative;overflow:hidden}
+.dcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:var(--daccent,var(--p3))}
+.dpart{font-size:var(--ts);font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--daccent,var(--p3))}
+.dtitle{font-size:clamp(1.8rem,5.5vw,4.2rem);font-weight:800;color:var(--text);line-height:1.1}
+.dsub{font-size:clamp(.85rem,1.7vw,1.25rem);color:var(--muted);font-weight:500}
+.dtime{display:inline-block;background:var(--daccent,var(--p3));color:white;font-size:var(--ts);font-weight:700;padding:.3em 1.1em;border-radius:20px;margin-top:.3rem}
+
+/* === TITLE SLIDE === */
+.title-card{width:min(93vw,1020px);max-height:min(86vh,640px);background:var(--card);border-radius:var(--r);box-shadow:0 12px 60px rgba(0,0,0,.11);display:flex;flex-direction:column;overflow:hidden}
+.tc-top{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:var(--pad);gap:clamp(.5rem,1.3vh,1.3rem)}
+.tc-bottom{background:linear-gradient(135deg,#ede8f8 0%,#e4f0f8 100%);padding:clamp(.8rem,1.8vw,1.4rem) var(--pad);display:flex;align-items:center;gap:clamp(.8rem,2vw,2rem);flex-wrap:wrap}
+.main-title{font-size:clamp(2.4rem,6.5vw,5.8rem);font-weight:800;color:var(--text);line-height:1}
+.main-sub{font-size:clamp(1rem,2.5vw,1.9rem);font-weight:600;color:var(--muted);font-style:italic}
+.badge{display:inline-block;padding:.22em .85em;border-radius:20px;font-size:var(--ts);font-weight:700;letter-spacing:.03em}
+.bpink{background:var(--p1);color:#903060}.bmint{background:var(--p2);color:#1a5840}.blav{background:var(--p3);color:#3a2a6a}.bpeach{background:var(--p6);color:#7a3a10}.bsky{background:var(--p7);color:#1a4870}
+.info-row{display:flex;gap:clamp(.6rem,1.5vw,1.5rem);align-items:center;flex-wrap:wrap}
+.info-item{font-size:var(--ts);color:var(--muted);font-weight:600}
+.sep{color:var(--light);font-size:var(--ts)}
+
+/* === LAYOUT HELPERS === */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.7rem,1.5vw,1.5rem)}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(.6rem,1.2vw,1.2rem)}
+
+.mini-card{background:#f5f3ee;border-radius:10px;padding:clamp(.65rem,1.2vw,1.1rem);border-left:3px solid var(--mc-accent,var(--p3))}
+.mc-title{font-size:var(--t3);font-weight:800;color:var(--text);margin-bottom:.25em}
+.mc-body{font-size:var(--ts);color:var(--muted);line-height:1.5}
+
+.cycle-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.6rem,1.2vw,1.1rem)}
+.c-box{background:#f5f3ee;border-radius:10px;padding:clamp(.65rem,1.1vw,1.1rem);position:relative;overflow:hidden;border-top:3px solid var(--cb-c,var(--p3))}
+.c-num{position:absolute;top:.2rem;right:.5rem;font-size:clamp(1.2rem,2.5vw,2.2rem);font-weight:800;color:var(--cb-c,var(--p3));opacity:.18}
+.c-title{font-size:var(--t3);font-weight:800;color:var(--text);margin-bottom:.2em}
+.c-desc{font-size:var(--ts);color:var(--muted);line-height:1.45}
+
+.tri-row{display:flex;gap:clamp(.7rem,1.4vw,1.4rem)}
+.tri-box{flex:1;border-radius:12px;padding:clamp(.75rem,1.4vw,1.4rem);position:relative;overflow:hidden}
+.tri-box::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.tb-brain{background:#fff0e8}.tb-brain::before{background:#e07848}
+.tb-mem{background:#e8f0fc}.tb-mem::before{background:#4880c4}
+.tb-act{background:#e8f8ee}.tb-act::before{background:#3a8a5a}
+.tri-icon{font-size:clamp(1.1rem,1.8vw,1.6rem)}
+.tri-name{font-size:var(--t3);font-weight:800;color:var(--text);margin:.15em 0}
+.tri-ex{font-size:var(--ts);color:var(--muted);line-height:1.5}
+
+.timeline{display:flex;flex-direction:column;gap:clamp(.28rem,.65vh,.75rem);position:relative}
+.timeline::before{content:'';position:absolute;left:clamp(26px,3.8vw,40px);top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--p3),var(--p5))}
+.tl-item{display:flex;align-items:flex-start;gap:clamp(.6rem,1.2vw,1.2rem);position:relative}
+.tl-dot{width:clamp(11px,1.4vw,15px);height:clamp(11px,1.4vw,15px);border-radius:50%;background:var(--p3);flex-shrink:0;margin-top:3px;border:2px solid white;box-shadow:0 0 0 2px var(--p3);position:relative;z-index:1;margin-left:clamp(20px,3vw,33px)}
+.tl-yr{font-size:var(--ts);font-weight:800;color:var(--p5);min-width:clamp(28px,3.5vw,46px);margin-top:2px}
+.tl-text{font-size:var(--tb);color:var(--muted);line-height:1.4}
+.tl-text strong{color:var(--text);font-weight:700}
+
+.grid-2x2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.6rem,1.2vw,1.2rem)}
+.g-card{background:#f5f3ee;border-radius:10px;padding:clamp(.65rem,1.2vw,1.1rem);border-top:3px solid var(--gc-c,var(--p3))}
+.gc-title{font-size:var(--t3);font-weight:800;color:var(--text);margin-bottom:.3em}
+.gc-body{font-size:var(--ts);color:var(--muted);line-height:1.5}
+
+.tbl{width:100%;border-collapse:collapse;font-size:var(--tb)}
+.tbl th{font-weight:700;color:white;background:var(--accent,var(--p3));padding:clamp(.35rem,.7vh,.7rem) clamp(.5rem,1vw,.9rem);text-align:left;font-size:var(--ts)}
+.tbl td{padding:clamp(.3rem,.6vh,.65rem) clamp(.5rem,1vw,.9rem);border-bottom:1px solid #eeebe3;color:var(--muted);line-height:1.4;vertical-align:top}
+.tbl td strong{color:var(--text)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:nth-child(even) td{background:#f8f6f1}
+
+.quote{background:#f4f0fc;border-left:4px solid var(--p3);border-radius:0 10px 10px 0;padding:clamp(.65rem,1.2vw,1.1rem);font-style:italic;font-size:var(--tb);color:var(--muted);line-height:1.6}
+.hl-box{background:linear-gradient(135deg,#fce8e0 0%,#e8f0fc 100%);border-radius:12px;padding:clamp(.75rem,1.4vw,1.3rem);text-align:center}
+.hl-text{font-size:clamp(.8rem,1.5vw,1.15rem);font-weight:700;color:var(--text);line-height:1.5}
+.warn-box{background:#fff8e8;border:1.5px solid #f0c840;border-radius:10px;padding:clamp(.65rem,1.2vw,1.1rem)}
+.road-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.5rem,1vw,1rem)}
+.road-card{background:#f5f3ee;border-radius:10px;padding:clamp(.65rem,1.1vw,1rem);border-top:3px solid var(--rc-c,var(--p3))}
+.rc-phase{font-size:var(--ts);font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--rc-c,var(--p3));margin-bottom:.3em}
+.rc-items{font-size:var(--ts);color:var(--muted);line-height:1.55}
+
+/* === CLOSING SLIDE === */
+.closing-slide{background:linear-gradient(135deg,#dceef8 0%,#f0e8f8 50%,#e8f8ec 100%)}
+.closing-card{width:min(88vw,880px);max-height:min(80vh,560px);background:white;border-radius:var(--r);box-shadow:0 12px 48px rgba(0,0,0,.09);padding:clamp(2rem,5vw,4.5rem);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(.8rem,1.8vh,1.8rem);text-align:center;overflow:hidden}
+
+/* === ANIMATIONS === */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .5s var(--ease-s),transform .5s var(--ease-b)}
+.slide.visible .reveal{opacity:1;transform:translateY(0)}
+.reveal:nth-child(1){transition-delay:.07s}.reveal:nth-child(2){transition-delay:.14s}.reveal:nth-child(3){transition-delay:.21s}.reveal:nth-child(4){transition-delay:.28s}.reveal:nth-child(5){transition-delay:.35s}.reveal:nth-child(6){transition-delay:.42s}
+.reveal-scale{opacity:0;transform:scale(.93);transition:opacity .5s var(--ease-s),transform .5s var(--ease-b)}
+.slide.visible .reveal-scale{opacity:1;transform:scale(1)}
+
+/* === INLINE EDITING === */
+.edit-hotzone{position:fixed;top:0;left:0;width:80px;height:80px;z-index:10000;cursor:pointer}
+.edit-toggle{position:fixed;top:14px;left:14px;width:36px;height:36px;border-radius:50%;border:none;background:var(--p3);color:white;font-size:15px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s ease,transform .2s ease;z-index:10001;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.edit-toggle.show,.edit-toggle.active{opacity:1;pointer-events:auto}
+.edit-toggle:hover{transform:scale(1.1)}
+.edit-banner{position:fixed;bottom:-60px;left:50%;transform:translateX(-50%);background:var(--p3);color:white;font-family:var(--font);font-size:clamp(.62rem,.9vw,.78rem);font-weight:600;padding:.45em 1.4em;border-radius:20px;z-index:10001;transition:bottom .3s ease;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.edit-banner.active{bottom:14px}
+body.edit-active [contenteditable]{outline:1.5px dashed var(--p3);border-radius:4px;cursor:text;padding:2px 4px;min-height:1em}
+body.edit-active [contenteditable]:focus{outline:2px solid var(--p5);background:rgba(155,141,196,.06)}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="counter"></div>
+
+<!-- ==================== SLIDE 1: TITLE ==================== -->
+<section class="slide" id="s1">
+  <div class="title-card reveal-scale">
+    <div class="tc-top">
+      <div class="reveal" style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="badge bpink">🧠 Brain</span>
+        <span class="badge bmint">💾 Memory</span>
+        <span class="badge blav">⚡ Actions</span>
+      </div>
+      <div class="main-title reveal">Agentic AI</div>
+      <div class="main-sub reveal">Brain. Memory. Actions.</div>
+      <div class="reveal" style="font-size:var(--tb);color:var(--muted);line-height:1.6;max-width:620px">
+        A complete 2-hour workshop — from understanding intelligence to building real agents. For students who want to <strong>lead</strong> the AI era, not follow it.
+      </div>
+    </div>
+    <div class="tc-bottom">
+      <div class="info-row reveal">
+        <span class="info-item">🎤 Kartik Joshi</span>
+        <span class="sep">·</span>
+        <span class="info-item">🏛 BVB College of Engineering, Hubli</span>
+        <span class="sep">·</span>
+        <span class="info-item">⏱ 2 Hours</span>
+        <span class="sep">·</span>
+        <span class="info-item">📅 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 2: AGENDA ==================== -->
+<section class="slide" id="s2" style="--accent:var(--p3)">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">Today's Journey</div>
+      <div class="heading reveal">Talk Overview</div>
+      <div class="slide-body reveal">
+        <div class="two-col">
+          <ul class="blist">
+            <li><strong>Opening</strong> — What is AI and Agentic AI? <em>(8 min)</em></li>
+            <li><strong>Part 1</strong> — Rapid Evolution: Perceptron to Agents <em>(8 min)</em></li>
+            <li><strong>Part 2</strong> — The BRAIN: LLMs & AI Ecosystem <em>(22 min)</em></li>
+            <li><strong>Part 3</strong> — The ACTIONS: Automation & Coding Agents <em>(15 min)</em></li>
+          </ul>
+          <ul class="blist">
+            <li><strong>Part 4</strong> — The MEMORY: Vector DB & Graph DB <em>(10 min)</em></li>
+            <li><strong>Demo 1</strong> — Caption Generator with Vector DB <em>(20 min)</em></li>
+            <li><strong>Demo 2</strong> — n8n RAG Chatbot with Pinecone <em>(15 min)</em></li>
+            <li><strong>Part 7</strong> — Mindset Shift & Learning Roadmap <em>(12 min)</em></li>
+          </ul>
+        </div>
+      </div>
+      <div class="hl-box reveal" style="margin-top:.3rem">
+        <div class="hl-text">One framework ties it all together — <strong>Brain · Memory · Actions</strong> — every tool you see today fits into one of these three.</div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 3: OPENING DIVIDER ==================== -->
+<section class="slide divider" id="s3" style="--dbg:#ede8f8;--daccent:var(--p3)">
+  <div class="dcard">
+    <div class="dpart reveal">Opening</div>
+    <div class="dtitle reveal">What is AI &<br>Agentic AI?</div>
+    <div class="dsub reveal">Intelligence, Agents, and the shift that changes everything</div>
+    <span class="dtime reveal">8 minutes</span>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 4: THE HOOK ==================== -->
+<section class="slide" id="s4" style="--accent:var(--p3)">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">Opening Hook</div>
+      <div class="heading reveal">Three Questions for the Audience</div>
+      <div class="slide-body">
+        <div class="cycle-grid reveal">
+          <div class="c-box" style="--cb-c:var(--p2)"><div class="c-num">1</div><div class="c-title">Google Today?</div><div class="c-desc">"How many of you used Google today to search for something?"<br><em style="color:var(--p4)">→ Almost all hands go up</em></div></div>
+          <div class="c-box" style="--cb-c:var(--p6)"><div class="c-num">2</div><div class="c-title">Used AI This Week?</div><div class="c-desc">"How many used ChatGPT, Gemini, or Claude — any AI tool — this week?"<br><em style="color:var(--p4)">→ Most hands go up</em></div></div>
+          <div class="c-box" style="--cb-c:var(--p3);grid-column:1/-1"><div class="c-num">3</div><div class="c-title">Know How It Works?</div><div class="c-desc">"How many actually know <em>how it works underneath</em> — and where it is heading in the next two to three years?"<br><em style="color:var(--p5);font-weight:600">→ Very few hands go up. That gap is exactly why we are here today.</em></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 5: WHAT IS INTELLIGENCE ==================== -->
+<section class="slide" id="s5" style="--accent:var(--p3)">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">O.2</div>
+      <div class="heading reveal">What is Intelligence?</div>
+      <div class="body-text reveal">At its core, intelligence is the ability to do four things — <em>"Can a machine do all of this?" — Alan Turing, 1950</em></div>
+      <div class="grid-2x2 reveal">
+        <div class="g-card" style="--gc-c:var(--p2)"><div class="gc-title">📚 Learn</div><div class="gc-body">Acquire knowledge and improve from experience over time</div></div>
+        <div class="g-card" style="--gc-c:var(--p6)"><div class="gc-title">🔄 Adapt</div><div class="gc-body">Handle new and unknown situations with flexibility</div></div>
+        <div class="g-card" style="--gc-c:var(--p3)"><div class="gc-title">🧩 Solve</div><div class="gc-body">Apply reasoning to work through complex problems</div></div>
+        <div class="g-card" style="--gc-c:var(--p5)"><div class="gc-title">⚖️ Decide</div><div class="gc-body">Make sound decisions even with incomplete information</div></div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 6: THREE LEVELS OF AI ==================== -->
+<section class="slide" id="s6" style="--accent:var(--p5)">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">O.3</div>
+      <div class="heading reveal">Three Levels of AI</div>
+      <div class="slide-body">
+        <table class="tbl reveal" style="--accent:var(--p5)">
+          <thead><tr><th>Level</th><th>What It Does</th><th>Examples</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Narrow AI</strong></td><td>One specific task — very well</td><td>Google Search, Face ID, Spam filters, Siri</td><td><span style="color:var(--p4);font-weight:700">✓ Here Now</span></td></tr>
+            <tr><td><strong>Agentic AI</strong></td><td>Multi-step goals, uses tools, acts autonomously</td><td>LangChain agents, Devin, n8n workflows, CrewAI</td><td><span style="color:var(--p6);font-weight:700">⚡ Rising Now</span></td></tr>
+            <tr><td><strong>General AI (AGI)</strong></td><td>Human-level reasoning across all domains</td><td>Not yet achieved</td><td><span style="color:var(--p3);font-weight:700">◌ Future</span></td></tr>
+          </tbody>
+        </table>
+        <div class="quote reveal">"Everything you have used so far — Google, ChatGPT, Siri — is Narrow AI. What is happening right now, in 2025 and 2026, is the rise of Agentic AI. That is a fundamentally different thing."</div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 7: WHAT IS AN AI AGENT ==================== -->
+<section class="slide" id="s7" style="--accent:var(--p5)">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">O.4</div>
+      <div class="heading reveal">What is an AI Agent?</div>
+      <div class="body-text reveal">"ChatGPT waits for your next message. An Agent does not wait. You give it a <strong>goal</strong> — it goes to work until done."</div>
+      <div class="cycle-grid reveal">
+        <div class="c-box" style="--cb-c:var(--p2)"><div class="c-num">1</div><div class="c-title">👁 Perceive</div><div class="c-desc">Receives input — text, data, files, web results, tool outputs</div></div>
+        <div class="c-box" style="--cb-c:var(--p3)"><div class="c-num">2</div><div class="c-title">🧠 Think</div><div class="c-desc">Reasons about the goal — plans steps, decides what tools to use</div></div>
+        <div class="c-box" style="--cb-c:var(--p5)"><div class="c-num">3</div><div class="c-title">⚡ Act</div><div class="c-desc">Executes — searches web, writes code, sends emails, calls APIs</div></div>
+        <div class="c-box" style="--cb-c:var(--p4)"><div class="c-num">4</div><div class="c-title">📖 Learn</div><div class="c-desc">Observes results — refines approach, loops back to step 1</div></div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 8: WAITER vs BUTLER ==================== -->
+<section class="slide" id="s8" style="--accent:var(--p6)">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">O.5 — The Analogy</div>
+      <div class="heading reveal">Waiter vs Butler</div>
+      <div class="two-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--p2)">
+          <div class="mc-title">🍽 ChatGPT = Waiter</div>
+          <ul class="blist" style="margin-top:.4rem">
+            <li>You ask → it answers</li>
+            <li>You ask again → it answers again</li>
+            <li>Every action requires your instruction</li>
+            <li>Never acts on its own</li>
+            <li>Completely <strong>reactive</strong></li>
+          </ul>
+        </div>
+        <div class="mini-card" style="--mc-accent:var(--p5)">
+          <div class="mc-title">🤵 AI Agent = Butler</div>
+          <ul class="blist" style="margin-top:.4rem">
+            <li>You say: <em>"I have an important meeting tomorrow"</em></li>
+            <li>Books your cab ✓</li>
+            <li>Prints documents, checks weather ✓</li>
+            <li>Sets alarm, prepares briefing ✓</li>
+            <li>One goal → <strong>everything handled</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="hl-box reveal"><div class="hl-text">That shift — from <strong>waiter to butler</strong> — is what Agentic AI represents. And it is happening right now.</div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 9: BRAIN MEMORY ACTIONS FRAMEWORK ==================== -->
+<section class="slide" id="s9" style="--accent:var(--p3)">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">O.6 — The Framework</div>
+      <div class="heading reveal">Brain · Memory · Actions</div>
+      <div class="body-text reveal">Every AI agent — no matter how simple or complex — is built from three things. This triangle is the spine of today's entire talk.</div>
+      <div class="tri-row reveal">
+        <div class="tri-box tb-brain">
+          <div class="tri-icon">🧠</div>
+          <div class="tri-name">Brain</div>
+          <div class="tri-ex"><strong>The LLM</strong> — GPT-4o, Claude, Gemini, Llama.<br>Reasons, plans, generates. The intelligence layer.</div>
+        </div>
+        <div class="tri-box tb-mem">
+          <div class="tri-icon">💾</div>
+          <div class="tri-name">Memory</div>
+          <div class="tri-ex"><strong>Databases</strong> — Vector DB, Graph DB, SQL.<br>Stores context so the agent remembers across sessions.</div>
+        </div>
+        <div class="tri-box tb-act">
+          <div class="tri-icon">⚡</div>
+          <div class="tri-name">Actions</div>
+          <div class="tri-ex"><strong>Tools & Frameworks</strong> — LangChain, n8n, APIs.<br>Connects the brain to the real world.</div>
+        </div>
+      </div>
+      <div class="quote reveal">"By the end of this talk, you will be able to look at any AI system in the world and say — I know what the brain is, I know what the memory is, and I know what the actions are."</div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+
+<!-- ==================== SLIDE 10: PART 1 DIVIDER ==================== -->
+<section class="slide divider" id="s10" style="--dbg:#e0eff8;--daccent:#5a8fc4">
+  <div class="dcard">
+    <div class="dpart reveal">Part 1</div>
+    <div class="dtitle reveal">Rapid Evolution</div>
+    <div class="dsub reveal">From Perceptron to Agents — 6 milestones in 75 years</div>
+    <span class="dtime reveal">8 minutes</span>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 11: 6 MILESTONES ==================== -->
+<section class="slide" id="s11" style="--accent:#5a8fc4">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">1.1 — Timeline</div>
+      <div class="heading reveal">Six Milestones: 1950 → 2026</div>
+      <div class="timeline reveal">
+        <div class="tl-item"><div class="tl-dot" style="background:#5a8fc4;box-shadow:0 0 0 2px #5a8fc4"></div><div class="tl-yr">1950</div><div class="tl-text"><strong>Turing Test</strong> — Alan Turing asks: "Can machines think?" AI as a field is born</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:#6a9fd4;box-shadow:0 0 0 2px #6a9fd4"></div><div class="tl-yr">1986</div><div class="tl-text"><strong>Backpropagation</strong> — Neural networks can finally be trained. Deep learning begins</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:#7ab0d4;box-shadow:0 0 0 2px #7ab0d4"></div><div class="tl-yr">2012</div><div class="tl-text"><strong>AlexNet</strong> — Deep learning crushes ImageNet. Computer vision transforms overnight</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:#8abce4;box-shadow:0 0 0 2px #8abce4"></div><div class="tl-yr">2017</div><div class="tl-text"><strong>Transformers</strong> — "Attention Is All You Need." The architecture behind every modern LLM</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:#9bc8e8;box-shadow:0 0 0 2px #9bc8e8"></div><div class="tl-yr">2022</div><div class="tl-text"><strong>ChatGPT launches</strong> — 100M users in 2 months. Generative AI enters everyday life</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--p5);box-shadow:0 0 0 2px var(--p5)"></div><div class="tl-yr">2025–26</div><div class="tl-text"><strong>Agentic AI rises</strong> — AI stops answering and starts <em>doing</em>. The era we are living in right now</div></div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 12: GEN AI TO AGENTIC AI ==================== -->
+<section class="slide" id="s12" style="--accent:#5a8fc4">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">1.2 — The Jump</div>
+      <div class="heading reveal">From Gen AI to Agentic AI</div>
+      <div class="body-text reveal">You already know Generative AI from your course — Hugging Face, text generation, image generation. This is where it went <strong>next</strong>.</div>
+      <div class="two-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--p2)">
+          <div class="mc-title">🎨 Generative AI</div>
+          <ul class="blist" style="margin-top:.4rem">
+            <li>Creates content on demand</li>
+            <li>Responds to prompts</li>
+            <li>One-shot output</li>
+            <li><strong>AI that creates things</strong></li>
+          </ul>
+        </div>
+        <div class="mini-card" style="--mc-accent:var(--p5)">
+          <div class="mc-title">⚡ Agentic AI</div>
+          <ul class="blist" style="margin-top:.4rem">
+            <li>Takes multi-step actions</li>
+            <li>Uses tools, APIs, databases</li>
+            <li>Loops until goal complete</li>
+            <li><strong>AI that does things</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="hl-box reveal"><div class="hl-text">The jump from <strong>creating</strong> to <strong>doing</strong> — that is the single most important shift in AI right now.</div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 13: PART 2 DIVIDER ==================== -->
+<section class="slide divider" id="s13" style="--dbg:#fce8d4;--daccent:#d07040">
+  <div class="dcard">
+    <div class="dpart reveal">Part 2</div>
+    <div class="dtitle reveal">The BRAIN</div>
+    <div class="dsub reveal">LLMs, Tools, and the complete AI Ecosystem</div>
+    <span class="dtime reveal">22 minutes</span>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 14: THE BIG 4 FRONTIER MODELS ==================== -->
+<section class="slide" id="s14" style="--accent:#d07040">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">2.1 — The Big 4</div>
+      <div class="heading reveal">Frontier Models You Need to Know</div>
+      <div class="grid-2x2 reveal">
+        <div class="g-card" style="--gc-c:#4285f4">
+          <div class="gc-title">🤖 GPT-4o — OpenAI</div>
+          <div class="gc-body">Best ecosystem, plugins, DALL-E built in. Multimodal (text + image + audio). Best for: everyday tasks, coding, DALL-E image gen. <strong>Free tier available.</strong></div>
+        </div>
+        <div class="g-card" style="--gc-c:#c84b2a">
+          <div class="gc-title">🔶 Claude 3.5 Sonnet — Anthropic</div>
+          <div class="gc-body">Best for long documents and complex analysis. 200K context window. Safest and most thoughtful responses. <strong>Best for: research and writing.</strong></div>
+        </div>
+        <div class="g-card" style="--gc-c:#1a73e8">
+          <div class="gc-title">💎 Gemini 1.5 — Google</div>
+          <div class="gc-body">Largest free context window (1M tokens). Best free API tier. Deep Google integration. <strong>Recommendation for students: Start here.</strong></div>
+        </div>
+        <div class="g-card" style="--gc-c:#7c6aad">
+          <div class="gc-title">🦙 Llama 3.3 — Meta</div>
+          <div class="gc-body">Fully open source. Run on your own laptop. No API key needed. GPT-4 quality, zero cost. Best for: privacy-first applications.</div>
+        </div>
+      </div>
+      <div class="body-text reveal" style="color:var(--p4);font-weight:600">💡 Student tip: Start with Gemini (best free API). Use Claude for long documents. Use GPT-4 for its plugin ecosystem.</div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 15: RESEARCH & WRITING TOOLS ==================== -->
+<section class="slide" id="s15" style="--accent:#d07040">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">2.2 — Research & Writing</div>
+      <div class="heading reveal">AI Tools Built for Deep Work</div>
+      <div class="slide-body">
+        <table class="tbl reveal" style="--accent:#d07040">
+          <thead><tr><th>Tool</th><th>What It Does</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Perplexity AI</strong></td><td>Real-time web search with cited answers — no hallucination</td><td>Research, fact-checking</td></tr>
+            <tr><td><strong>NotebookLM</strong></td><td>Upload your notes → ask questions → get a podcast version</td><td>Study, exam prep</td></tr>
+            <tr><td><strong>Elicit</strong></td><td>Searches academic papers, extracts data from studies</td><td>Literature review</td></tr>
+            <tr><td><strong>Consensus</strong></td><td>Finds scientific consensus on any topic from papers</td><td>Evidence-based research</td></tr>
+            <tr><td><strong>Grammarly / Wordtune</strong></td><td>AI writing enhancement, tone adjustment, rephrasing</td><td>Reports, emails, essays</td></tr>
+          </tbody>
+        </table>
+        <div class="quote reveal">"NotebookLM is something every one of you should try this week. Upload your subject notes. Ask it to explain any concept. It is like having a personal tutor available 24 hours a day."</div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 16: PRESENTATION TOOLS ==================== -->
+<section class="slide" id="s16" style="--accent:#d07040">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">2.3 — Presentation Tools</div>
+      <div class="heading reveal">AI-Powered Slide Creation</div>
+      <ul class="blist reveal">
+        <li><strong>Gamma.app</strong> — Describe your topic → get a full slide deck in 30 seconds. Free tier. Best for fast drafts.</li>
+        <li><strong>Beautiful.ai</strong> — AI suggests layout and design as you type. Professional output, no design skills needed.</li>
+        <li><strong>Tome</strong> — AI-native presentation builder, great for storytelling and narrative-driven decks.</li>
+        <li><strong>Claude + Frontend Slides Skill</strong> — Generates beautiful custom HTML slide decks that run in any browser. Fully customisable. (This presentation was made this way!)</li>
+        <li><strong>NotebookLM Podcast Mode</strong> — Converts your documents into a two-person audio discussion — useful for explaining complex topics to audiences.</li>
+      </ul>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 17: HOW TO PICK A MODEL ==================== -->
+<section class="slide" id="s17" style="--accent:#d07040">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">2.4 — Model Selection</div>
+      <div class="heading reveal">How to Pick the Right Model</div>
+      <div class="body-text reveal">Before building anything, check this site first: <strong style="color:var(--p5)">artificialanalysis.ai</strong> — the leaderboard that changes every week.</div>
+      <div class="grid-2x2 reveal">
+        <div class="g-card" style="--gc-c:var(--p2)"><div class="gc-title">🏆 Quality Index</div><div class="gc-body">Models ranked by reasoning, coding, math, and language benchmarks. Use this to choose the right brain for your task.</div></div>
+        <div class="g-card" style="--gc-c:var(--p6)"><div class="gc-title">⚡ Speed</div><div class="gc-body">Tokens per second — critical for real-time chat applications and user-facing products where latency matters.</div></div>
+        <div class="g-card" style="--gc-c:var(--p5)"><div class="gc-title">💰 Price</div><div class="gc-body">Cost per million input/output tokens. The difference between free and $15/M tokens is enormous for production apps.</div></div>
+        <div class="g-card" style="--gc-c:var(--p3)"><div class="gc-title">📄 Context Window</div><div class="gc-body">How much text the model processes at once. Gemini 1.5 = 1M tokens. GPT-4 = 128K. Critical for large documents.</div></div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 18: OPENROUTER ==================== -->
+<section class="slide" id="s18" style="--accent:#d07040">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">2.4b — OpenRouter</div>
+      <div class="heading reveal">The Universal Remote for AI Models</div>
+      <div class="body-text reveal"><strong>openrouter.ai</strong> — One single API key that gives you access to over 200 models. Pay per use, only for what you consume.</div>
+      <div class="three-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--p2)"><div class="mc-title">🔑 One Key</div><div class="mc-body">GPT, Claude, Gemini, Llama, Mistral, DeepSeek — all with a single API key</div></div>
+        <div class="mini-card" style="--mc-accent:var(--p3)"><div class="mc-title">🔄 Easy Switch</div><div class="mc-body">Change your agent's brain in one line of code — no new accounts, no new keys</div></div>
+        <div class="mini-card" style="--mc-accent:var(--p5)"><div class="mc-title">💸 Pay-as-you-go</div><div class="mc-body">Pay only for what you use. Perfect for comparing models on your own real-world data</div></div>
+      </div>
+      <div class="hl-box reveal"><div class="hl-text">"Think of OpenRouter as the universal remote control for all AI models. One key, all models. You can switch your agent's brain in one line of code."</div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 19: OPEN SOURCE MODELS ==================== -->
+<section class="slide" id="s19" style="--accent:#d07040">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">2.5 — Open Source</div>
+      <div class="heading reveal">The Open Source Models Universe</div>
+      <div class="two-col reveal">
+        <div>
+          <table class="tbl" style="--accent:#d07040">
+            <thead><tr><th>Model</th><th>By</th><th>Best For</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Llama 3.3 70B</strong></td><td>Meta</td><td>General purpose, coding</td></tr>
+              <tr><td><strong>Mistral 7B</strong></td><td>Mistral AI</td><td>Lightweight, fast</td></tr>
+              <tr><td><strong>DeepSeek-R1</strong></td><td>DeepSeek</td><td>Reasoning, math</td></tr>
+              <tr><td><strong>Phi-3 Mini</strong></td><td>Microsoft</td><td>Edge devices, low RAM</td></tr>
+              <tr><td><strong>Gemma 2</strong></td><td>Google</td><td>Compact, efficient</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="slide-body" style="display:flex;flex-direction:column;gap:.5rem">
+          <div class="mc-title" style="font-size:var(--t3);font-weight:800;color:var(--text)">Run Locally — Free Forever</div>
+          <div class="mini-card" style="--mc-accent:var(--p4)"><div class="mc-title">🦙 Ollama</div><div class="mc-body">One command installs any model on your laptop. No internet, no API key needed. ollama.ai</div></div>
+          <div class="mini-card" style="--mc-accent:var(--p3)"><div class="mc-title">🖥 LM Studio</div><div class="mc-body">Desktop app with beautiful UI for running local models. No terminal needed.</div></div>
+          <div class="mini-card" style="--mc-accent:var(--p2)"><div class="mc-title">💬 Jan.ai</div><div class="mc-body">Easy local model runner with a chat interface built in.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 20: IMAGE VIDEO AUDIO ==================== -->
+<section class="slide" id="s20" style="--accent:#d07040">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">2.6 — Multimedia Generation</div>
+      <div class="heading reveal">Image, Video & Audio AI</div>
+      <div class="three-col reveal">
+        <div>
+          <div class="mc-title" style="font-size:var(--t3);font-weight:800;color:var(--text);margin-bottom:.4rem">🖼 Image</div>
+          <ul class="blist">
+            <li><strong>Midjourney</strong> — Artistic, stunning quality</li>
+            <li><strong>DALL-E 3</strong> — Built into ChatGPT</li>
+            <li><strong>Flux / Stable Diffusion</strong> — Open source, local</li>
+            <li><strong>Adobe Firefly</strong> — Commercial-safe</li>
+          </ul>
+        </div>
+        <div>
+          <div class="mc-title" style="font-size:var(--t3);font-weight:800;color:var(--text);margin-bottom:.4rem">🎬 Video</div>
+          <ul class="blist">
+            <li><strong>Sora</strong> — OpenAI, cinematic quality</li>
+            <li><strong>Runway Gen-3</strong> — Creative director's tool</li>
+            <li><strong>Kling</strong> — Fast, realistic motion</li>
+            <li><strong>Pika Labs</strong> — Text to short video</li>
+          </ul>
+        </div>
+        <div>
+          <div class="mc-title" style="font-size:var(--t3);font-weight:800;color:var(--text);margin-bottom:.4rem">🎙 Audio</div>
+          <ul class="blist">
+            <li><strong>ElevenLabs</strong> — Voice cloning, 32 languages, emotional control. Clone your voice in 3 mins.</li>
+            <li><strong>Suno AI</strong> — Full songs from text prompts</li>
+            <li><strong>Udio</strong> — Professional music generation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 21: HEYGEN ==================== -->
+<section class="slide" id="s21" style="--accent:#d07040">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">2.6b — HeyGen</div>
+      <div class="heading reveal">HeyGen — The Content Creation Game Changer</div>
+      <div class="grid-2x2 reveal">
+        <div class="g-card" style="--gc-c:var(--p1)"><div class="gc-title">🧑‍💼 AI Avatar</div><div class="gc-body">Create a digital version of yourself — your face, voice, gestures — captured once, reusable forever.</div></div>
+        <div class="g-card" style="--gc-c:var(--p2)"><div class="gc-title">🌍 Video Translation</div><div class="gc-body">Record in English → HeyGen translates to 30+ languages and lip-syncs your avatar. Hindi, Kannada, Tamil, Spanish.</div></div>
+        <div class="g-card" style="--gc-c:var(--p3)"><div class="gc-title">🎙 Instant Dubbing</div><div class="gc-body">Upload any existing video → get it dubbed in any language in minutes. Zero studio time.</div></div>
+        <div class="g-card" style="--gc-c:var(--p5)"><div class="gc-title">📹 Text to Video</div><div class="gc-body">Type a script → choose avatar → select background → professional video, no camera needed.</div></div>
+      </div>
+      <div class="hl-box reveal"><div class="hl-text">For educators: Record your lecture once in English → automatically available in Kannada, Hindi, Tamil. For YouTubers: <strong>One video. 30 languages. 30× the audience.</strong></div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 22: PART 3 DIVIDER ==================== -->
+<section class="slide divider" id="s22" style="--dbg:#d8f0e8;--daccent:#3a8a5a">
+  <div class="dcard">
+    <div class="dpart reveal">Part 3</div>
+    <div class="dtitle reveal">The ACTIONS</div>
+    <div class="dsub reveal">Automation Tools, Frameworks, and Coding Agents</div>
+    <span class="dtime reveal">15 minutes</span>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 23: AUTOMATION TIMELINE ==================== -->
+<section class="slide" id="s23" style="--accent:#3a8a5a">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">3.1 — Timeline</div>
+      <div class="heading reveal">Automation Tools: 2011 → 2024</div>
+      <div class="timeline reveal">
+        <div class="tl-item"><div class="tl-dot" style="background:#3a8a5a;box-shadow:0 0 0 2px #3a8a5a"></div><div class="tl-yr">2011</div><div class="tl-text"><strong>Zapier</strong> — If this, then that. No-code automation connects apps with triggers and actions</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:#4a9a6a;box-shadow:0 0 0 2px #4a9a6a"></div><div class="tl-yr">2019</div><div class="tl-text"><strong>n8n</strong> — Open source, self-hostable visual workflow automation. Free and powerful</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:#5aaa7a;box-shadow:0 0 0 2px #5aaa7a"></div><div class="tl-yr">2022</div><div class="tl-text"><strong>LangChain</strong> — First framework to chain LLMs with tools, memory, and reasoning steps</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:#6aba8a;box-shadow:0 0 0 2px #6aba8a"></div><div class="tl-yr">2023</div><div class="tl-text"><strong>AutoGPT / BabyAGI</strong> — First autonomous agents that set their own sub-goals. Internet goes wild</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--p5);box-shadow:0 0 0 2px var(--p5)"></div><div class="tl-yr">2024</div><div class="tl-text"><strong>CrewAI / LangGraph</strong> — Multi-agent collaboration. Teams of AI working on complex goals together</div></div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 24: TOOL CATEGORIES ==================== -->
+<section class="slide" id="s24" style="--accent:#3a8a5a">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">3.1b — Categories</div>
+      <div class="heading reveal">Four Layers of the Actions Stack</div>
+      <div class="grid-2x2 reveal">
+        <div class="g-card" style="--gc-c:var(--p2)">
+          <div class="gc-title">🔗 No-Code Automation</div>
+          <div class="gc-body"><strong>Zapier, Make.com, n8n</strong><br>Connect apps, automate workflows. No programming needed. If email arrives → create task → notify Slack.</div>
+        </div>
+        <div class="g-card" style="--gc-c:var(--p3)">
+          <div class="gc-title">🧠 LLM Frameworks</div>
+          <div class="gc-body"><strong>LangChain, LangGraph</strong><br>Build intelligent agents that reason, remember, and use tools. The developer's primary building block.</div>
+        </div>
+        <div class="g-card" style="--gc-c:var(--p5)">
+          <div class="gc-title">👥 Multi-Agent Systems</div>
+          <div class="gc-body"><strong>CrewAI, AutoGPT, OpenClaw</strong><br>Multiple agents collaborating on complex goals. Researcher + Writer + Editor agents working as a team.</div>
+        </div>
+        <div class="g-card" style="--gc-c:var(--p6)">
+          <div class="gc-title">🎨 Visual LLM Builders</div>
+          <div class="gc-body"><strong>Flowise, Dify, Langflow</strong><br>Build LangChain agents with drag-and-drop interface. No code, full power.</div>
+        </div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 25: CODING AGENTS ==================== -->
+<section class="slide" id="s25" style="--accent:#3a8a5a">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">3.2 — Coding Agents</div>
+      <div class="heading reveal">The New Software Engineer</div>
+      <div class="slide-body">
+        <table class="tbl reveal" style="--accent:#3a8a5a">
+          <thead><tr><th>Tool</th><th>What It Does</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Cursor</strong></td><td>AI-first IDE — code with an AI pair programmer in every keystroke</td><td>Daily development</td></tr>
+            <tr><td><strong>GitHub Copilot</strong></td><td>Inline code suggestions inside VS Code and JetBrains IDEs</td><td>IDE integration</td></tr>
+            <tr><td><strong>Devin AI</strong></td><td>Fully autonomous software engineer — reads issue, writes code, opens PR</td><td>Autonomous tasks</td></tr>
+            <tr><td><strong>Claude Code</strong></td><td>Terminal-based agent — runs tests, fixes bugs, refactors at file scale</td><td>Large codebases</td></tr>
+            <tr><td><strong>Windsurf</strong></td><td>AI IDE with multi-file awareness, agents that reason across the whole project</td><td>Complex projects</td></tr>
+          </tbody>
+        </table>
+        <div class="quote reveal">"These tools do not replace engineers. They replace the time engineers spend on repetitive, mechanical work. Engineers using Cursor do in 2 hours what used to take 2 days."</div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 26: USE CASES SOFTWARE ==================== -->
+<section class="slide" id="s26" style="--accent:#3a8a5a">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">3.3 — Real-World Use Cases</div>
+      <div class="heading reveal">Agentic AI in Software Development</div>
+      <div class="two-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--p3)">
+          <div class="mc-title">🐛 Bug Fix in 1 Hour</div>
+          <div class="mc-body" style="margin-top:.4rem;line-height:1.6">A developer opens a GitHub issue at <strong>9 AM</strong>. By <strong>10 AM</strong>, Devin AI has:<br>✓ Read the issue<br>✓ Planned the fix<br>✓ Written the code<br>✓ Written and fixed failing tests<br>✓ Submitted a pull request for human review</div>
+        </div>
+        <div class="mini-card" style="--mc-accent:var(--p5)">
+          <div class="mc-title">📁 10,000 Tests Migrated</div>
+          <div class="mc-body" style="margin-top:.4rem;line-height:1.6">Claude Code migrates a codebase in <strong>one week</strong>:<br>✓ 2,000 files changed<br>✓ 50,000 lines modified<br>✓ 85% complete on first pass<br>✓ One developer + multiple agents running in parallel<br>What used to take months — done in days.</div>
+        </div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 27: USE CASES BUSINESS & EDUCATION ==================== -->
+<section class="slide" id="s27" style="--accent:#3a8a5a">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">3.3b — More Use Cases</div>
+      <div class="heading reveal">Business, Marketing & Education</div>
+      <ul class="blist reveal">
+        <li><strong>Email Agent</strong> — An OpenClaw agent on WhatsApp checks email every morning, summarises what needs urgent attention, and drafts replies — ready to send with one tap.</li>
+        <li><strong>Research Team</strong> — A CrewAI team researches a topic, writes a full report, fact-checks it, and formats it for publication — in the time it takes to have a coffee.</li>
+        <li><strong>Lead Generation</strong> — Agent researches clients, scores by relevance, writes personalised outreach emails, updates CRM — fully automated, zero manual work.</li>
+        <li><strong>Document Intelligence</strong> — An agent given a 300-page PDF reads it, extracts key insights, cross-references recent papers, and produces a structured summary with citations — in under 5 minutes.</li>
+        <li><strong>Student Study Agent</strong> — Upload semester notes → NotebookLM generates 50 practice questions, explains weak areas, creates an audio podcast for revision on the commute.</li>
+      </ul>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+
+<!-- ==================== SLIDE 28: PART 4 DIVIDER ==================== -->
+<section class="slide divider" id="s28" style="--dbg:#e8d8f8;--daccent:#7c6aad">
+  <div class="dcard">
+    <div class="dpart reveal">Part 4</div>
+    <div class="dtitle reveal">The MEMORY</div>
+    <div class="dsub reveal">Databases, Vector DB, Graph DB, and LightRAG</div>
+    <span class="dtime reveal">10 minutes</span>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 29: DATABASE PLATFORMS ==================== -->
+<section class="slide" id="s29" style="--accent:#7c6aad">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">4.1 — Databases</div>
+      <div class="heading reveal">Database Platforms for AI Agents</div>
+      <div class="body-text reveal">"Without memory, an agent forgets everything when a conversation ends. Memory turns a chatbot into a knowledge system."</div>
+      <div class="two-col reveal">
+        <div>
+          <div class="mc-title" style="font-size:var(--t3);font-weight:800;color:var(--text);margin-bottom:.5rem">☁️ Cloud Platforms</div>
+          <ul class="blist">
+            <li><strong>Supabase</strong> — Best for students. Free, has a UI, includes vector search. Postgres + pgvector built in.</li>
+            <li><strong>Firebase</strong> — Google's real-time database. Great for mobile apps.</li>
+            <li><strong>MongoDB Atlas</strong> — Document database with vector search. JSON-native.</li>
+            <li><strong>Pinecone</strong> — Purpose-built cloud vector database. Production-grade.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="mc-title" style="font-size:var(--t3);font-weight:800;color:var(--text);margin-bottom:.5rem">💻 Run Locally (Free)</div>
+          <ul class="blist">
+            <li><strong>ChromaDB</strong> — Easiest local vector database. Pure Python, installs in one line.</li>
+            <li><strong>SQLite</strong> — File-based SQL. Ships with Python. Zero setup.</li>
+            <li><strong>DuckDB</strong> — Analytical database that runs in memory. Perfect for data work.</li>
+            <li><strong>Neo4j</strong> — Graph database. Run locally for relationship-heavy data.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 30: VECTOR DB ==================== -->
+<section class="slide" id="s30" style="--accent:#7c6aad">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">4.2a — Vector Database</div>
+      <div class="heading reveal">Vector DB — The Similarity Engine</div>
+      <div class="body-text reveal">Converts text into numbers (embeddings) and stores them. Searches by <strong>meaning</strong>, not keywords.</div>
+      <div class="two-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--p3)">
+          <div class="mc-title">📚 The Librarian Analogy</div>
+          <div class="mc-body" style="margin-top:.3rem;line-height:1.6">"A vector DB is a very intelligent librarian who has read every book in the library. You ask a question, and she says — based on the <em>meaning</em> of your question, here are the three most relevant passages. She does not search by keyword. She searches by <strong>meaning</strong>."</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div class="mini-card" style="--mc-accent:var(--p2)">
+            <div class="mc-title">✅ Best For</div>
+            <div class="mc-body">Semantic search · Document Q&amp;A · Finding similar content · RAG chatbots · Recommendation systems</div>
+          </div>
+          <div class="mini-card" style="--mc-accent:var(--p5)">
+            <div class="mc-title">🛠 Tools</div>
+            <div class="mc-body"><strong>ChromaDB</strong> (local) · <strong>Pinecone</strong> (cloud) · <strong>Weaviate</strong> · <strong>FAISS</strong> (Facebook, open source)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 31: GRAPH DB ==================== -->
+<section class="slide" id="s31" style="--accent:#7c6aad">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">4.2b — Graph Database</div>
+      <div class="heading reveal">Graph DB — The Knowledge Map</div>
+      <div class="body-text reveal">Stores not just facts, but <strong>relationships between facts</strong>. The database that understands how things connect.</div>
+      <div class="two-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--p5)">
+          <div class="mc-title">🗺 The Knowledge Map Analogy</div>
+          <div class="mc-body" style="margin-top:.3rem;line-height:1.6">"Think of it like a knowledge map where every concept is a dot and every relationship is a line connecting the dots."<br><br>Example: <strong>Hubli</strong> → is in → <strong>Karnataka</strong> → is in → <strong>India</strong> → is in → <strong>Asia</strong><br><br>Agents using graph DBs can answer: not just "what is similar" but <em>"how are things connected?"</em></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div class="mini-card" style="--mc-accent:var(--p3)">
+            <div class="mc-title">✅ Best For</div>
+            <div class="mc-body">Knowledge graphs · Relationship-heavy data · Complex reasoning chains · Fraud detection · Recommendation networks</div>
+          </div>
+          <div class="mini-card" style="--mc-accent:var(--p1)">
+            <div class="mc-title">🛠 Primary Tool</div>
+            <div class="mc-body"><strong>Neo4j</strong> — the industry standard for graph databases. Uses Cypher query language. Free community edition available.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 32: LIGHTRAG ==================== -->
+<section class="slide" id="s32" style="--accent:#7c6aad">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">4.2c — LightRAG</div>
+      <div class="heading reveal">LightRAG — The Best of Both Worlds</div>
+      <div class="body-text reveal">2024 innovation: combines vector search with graph-based knowledge retrieval for richer, more contextual answers.</div>
+      <div class="two-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--p2)">
+          <div class="mc-title">📑 Plain RAG</div>
+          <div class="mc-body" style="margin-top:.3rem;line-height:1.7">Document → Chunks → Embeddings → Vector DB → Find similar → Answer<br><br><em>"Here is what is similar to your question."</em></div>
+        </div>
+        <div class="mini-card" style="--mc-accent:var(--p5)">
+          <div class="mc-title">✨ LightRAG</div>
+          <div class="mc-body" style="margin-top:.3rem;line-height:1.7">Document → Entities extracted → Knowledge Graph → Vector embeddings → Combined retrieval → Richer answer<br><br><em>"Here is what is similar, AND here is how the concepts connect to each other."</em></div>
+        </div>
+      </div>
+      <div class="hl-box reveal"><div class="hl-text">The answers from LightRAG are <strong>significantly richer and more accurate</strong> than plain RAG — because it understands context AND relationships.</div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 33: MEMORY SUMMARY ==================== -->
+<section class="slide" id="s33" style="--accent:#7c6aad">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">4.3 — Summary</div>
+      <div class="heading reveal">Which Memory Type to Use?</div>
+      <table class="tbl reveal" style="--accent:#7c6aad">
+        <thead><tr><th>Type</th><th>Analogy</th><th>Use When...</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vector DB</strong></td><td>Intelligent librarian</td><td>You need semantic search — find by meaning, not keywords</td><td>ChromaDB, Pinecone, FAISS</td></tr>
+          <tr><td><strong>Graph DB</strong></td><td>Knowledge map</td><td>Your data has complex relationships between entities</td><td>Neo4j, ArangoDB</td></tr>
+          <tr><td><strong>LightRAG</strong></td><td>Both librarian + map</td><td>You need rich answers that understand both similarity AND context</td><td>LightRAG (2024)</td></tr>
+          <tr><td><strong>SQL / Supabase</strong></td><td>Filing cabinet</td><td>Structured data — user records, transactions, logs</td><td>PostgreSQL, SQLite</td></tr>
+        </tbody>
+      </table>
+      <div class="quote reveal">"Memory is what turns a chatbot into a knowledge system. Without it, every conversation starts from zero."</div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 34: DEMO 1 DIVIDER ==================== -->
+<section class="slide divider" id="s34" style="--dbg:#fce8d0;--daccent:#c07030">
+  <div class="dcard">
+    <div class="dpart reveal">Live Demo 1</div>
+    <div class="dtitle reveal">Caption Generator</div>
+    <div class="dsub reveal">Personalised Social Media Content with Vector DB + Gemini</div>
+    <span class="dtime reveal">20 minutes</span>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 35: DEMO 1 PROBLEM ==================== -->
+<section class="slide" id="s35" style="--accent:#c07030">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">Demo 1 — The Problem</div>
+      <div class="heading reveal">The Problem This Demo Solves</div>
+      <div class="two-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--p1)">
+          <div class="mc-title">❌ The Problem</div>
+          <div class="mc-body" style="margin-top:.3rem;line-height:1.65">A marketing team needs YouTube titles, descriptions, Instagram captions, and Facebook posts for every new video they produce.<br><br>Writing these manually takes <strong>2–3 hours per video</strong>.<br><br>Generic AI tools produce generic content that does not match the brand voice.</div>
+        </div>
+        <div class="mini-card" style="--mc-accent:var(--p2)">
+          <div class="mc-title">✅ The Solution</div>
+          <div class="mc-body" style="margin-top:.3rem;line-height:1.65">An AI agent with the <strong>company profile stored in a local Vector DB</strong>.<br><br>Give it a video idea → it retrieves relevant brand context → generates personalised content for all platforms simultaneously.<br><br><strong>Result: 2 hours → 30 seconds. Zero generic output.</strong></div>
+        </div>
+      </div>
+      <div class="hl-box reveal"><div class="hl-text">The entire code is under <strong>80 lines of Python</strong>. Stack: ChromaDB + LangChain + Gemini API. All free.</div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 36: DEMO 1 ARCHITECTURE ==================== -->
+<section class="slide" id="s36" style="--accent:#c07030">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">Demo 1 — Architecture</div>
+      <div class="heading reveal">System Architecture: How It Works</div>
+      <div class="timeline reveal">
+        <div class="tl-item"><div class="tl-dot" style="background:#c07030;box-shadow:0 0 0 2px #c07030"></div><div class="tl-yr">Step 1</div><div class="tl-text"><strong>Profile Loaded</strong> — BVB College's profile (departments, programs, achievements, vision) loaded into ChromaDB as vector embeddings</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:#c88040;box-shadow:0 0 0 2px #c88040"></div><div class="tl-yr">Step 2</div><div class="tl-text"><strong>User Input</strong> — Enter a video idea into the Streamlit UI: e.g. "How BVB students use AI tools in final year projects"</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:#d09050;box-shadow:0 0 0 2px #d09050"></div><div class="tl-yr">Step 3</div><div class="tl-text"><strong>Retrieval</strong> — LangChain searches ChromaDB for the most relevant context about BVB College matching the video topic</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:#d8a060;box-shadow:0 0 0 2px #d8a060"></div><div class="tl-yr">Step 4</div><div class="tl-text"><strong>Generation</strong> — Retrieved context + video idea sent to Gemini API → personalised YouTube titles, Instagram captions, Facebook posts generated simultaneously</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--p4);box-shadow:0 0 0 2px var(--p4)"></div><div class="tl-yr">Output</div><div class="tl-text"><strong>Platform-specific content</strong> — SEO-optimised titles, relevant hashtags, correct tone per platform. All personalised to BVB College.</div></div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 37: DEMO 1 KEY CONCEPTS ==================== -->
+<section class="slide" id="s37" style="--accent:#c07030">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">Demo 1 — Key Takeaways</div>
+      <div class="heading reveal">What This Demo Teaches</div>
+      <ul class="blist reveal">
+        <li><strong>RAG in Action</strong> — The agent did not use a generic prompt. It <em>retrieved specific, relevant information</em> from the database before generating. That is what RAG — Retrieval Augmented Generation — means.</li>
+        <li><strong>Personalisation vs Generic</strong> — Without the vector DB, you get generic captions. With it, you get content that <em>knows the brand, the audience, and the context</em>.</li>
+        <li><strong>Brain · Memory · Actions</strong> — Brain = Gemini. Memory = ChromaDB with the college profile. Actions = LangChain retrieval + output generation. All three working together.</li>
+        <li><strong>You Can Build This Tonight</strong> — ChromaDB runs on a laptop. Gemini API is free. LangChain is open source. The entire stack costs zero rupees.</li>
+      </ul>
+      <div class="hl-box reveal"><div class="hl-text">Companies pay agencies <strong>₹50,000/month</strong> for exactly this kind of personalised content generation. You can build it tonight, for free.</div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 38: DEMO 2 DIVIDER ==================== -->
+<section class="slide divider" id="s38" style="--dbg:#d4e8f8;--daccent:#3870c0">
+  <div class="dcard">
+    <div class="dpart reveal">Live Demo 2</div>
+    <div class="dtitle reveal">n8n RAG Chatbot</div>
+    <div class="dsub reveal">Pinecone + AI Agent — Built Without a Single Line of Code</div>
+    <span class="dtime reveal">15 minutes</span>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 39: DEMO 2 OVERVIEW ==================== -->
+<section class="slide" id="s39" style="--accent:#3870c0">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">Demo 2 — What This Shows</div>
+      <div class="heading reveal">A Production-Ready RAG Chatbot — No Code</div>
+      <div class="grid-2x2 reveal">
+        <div class="g-card" style="--gc-c:var(--p7)"><div class="gc-title">👁 Visual Pipeline</div><div class="gc-body">The entire agent is built by connecting 4 nodes in n8n. Anyone in the room can build this — no programming required.</div></div>
+        <div class="g-card" style="--gc-c:var(--p3)"><div class="gc-title">☁️ Cloud Vector DB</div><div class="gc-body">Pinecone — the same vector database used by real companies in production. Free tier available for students.</div></div>
+        <div class="g-card" style="--gc-c:var(--p2)"><div class="gc-title">💬 Conversational</div><div class="gc-body">A real chatbot with memory — not just one-shot queries. The agent remembers the conversation context across turns.</div></div>
+        <div class="g-card" style="--gc-c:var(--p5)"><div class="gc-title">🔄 Live Agent Cycle</div><div class="gc-body">Watch Perceive → Think → Act → Learn happen visually — nodes lighting up green in real time as the agent processes.</div></div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 40: 4-NODE PIPELINE ==================== -->
+<section class="slide" id="s40" style="--accent:#3870c0">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">Demo 2 — Architecture</div>
+      <div class="heading reveal">The 4-Node Pipeline in n8n</div>
+      <div class="timeline reveal">
+        <div class="tl-item"><div class="tl-dot" style="background:var(--p7);box-shadow:0 0 0 2px var(--p7)"></div><div class="tl-yr">Node 1</div><div class="tl-text"><strong>Chat Trigger</strong> — 👁 PERCEIVE — Receives the user's question from the chat interface. The entry point of the agent.</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--p2);box-shadow:0 0 0 2px var(--p2)"></div><div class="tl-yr">Node 2</div><div class="tl-text"><strong>Pinecone Search</strong> — 💾 MEMORY — Searches the indexed document in Pinecone for the most relevant chunks matching the question.</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--p3);box-shadow:0 0 0 2px var(--p3)"></div><div class="tl-yr">Node 3</div><div class="tl-text"><strong>AI Agent (Gemini)</strong> — 🧠 THINK — Reads the retrieved context + question, generates an accurate, grounded answer. Conversation memory enabled.</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--p4);box-shadow:0 0 0 2px var(--p4)"></div><div class="tl-yr">Node 4</div><div class="tl-text"><strong>Chat Response</strong> — ⚡ ACT — Delivers the answer back to the chat interface. Total cost: ₹0. Total code written: 0 lines.</div></div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 41: DEMO 2 CONNECT TO FRAMEWORK ==================== -->
+<section class="slide" id="s41" style="--accent:#3870c0">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">Demo 2 — The Framework Live</div>
+      <div class="heading reveal">Brain · Memory · Actions — Visible on Screen</div>
+      <div class="tri-row reveal">
+        <div class="tri-box tb-brain">
+          <div class="tri-icon">🧠</div>
+          <div class="tri-name">Brain</div>
+          <div class="tri-ex"><strong>Node 3 — Gemini</strong><br>THINK — reads retrieved context, reasons about the answer, generates response with conversation memory</div>
+        </div>
+        <div class="tri-box tb-mem">
+          <div class="tri-icon">💾</div>
+          <div class="tri-name">Memory</div>
+          <div class="tri-ex"><strong>Node 2 — Pinecone</strong><br>PERCEIVE — searches indexed knowledge base for relevant chunks. Cloud-hosted, production-grade.</div>
+        </div>
+        <div class="tri-box tb-act">
+          <div class="tri-icon">⚡</div>
+          <div class="tri-name">Actions</div>
+          <div class="tri-ex"><strong>Nodes 1 + 4 — n8n</strong><br>ACT — receives input from chat, delivers output back. The visual orchestration layer.</div>
+        </div>
+      </div>
+      <div class="quote reveal">"I did not write a single line of code. This entire pipeline was built by connecting four nodes in a visual interface. n8n.io is free. Pinecone has a free tier. Gemini API is free. The cost to build what you just saw is <strong>zero rupees</strong>."</div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 42: WHAT STUDENTS CAN BUILD ==================== -->
+<section class="slide" id="s42" style="--accent:#3870c0">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">Demo 2 — Your Turn</div>
+      <div class="heading reveal">Three Projects You Can Build Next</div>
+      <div class="three-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--p3)">
+          <div class="mc-title">📚 Exam Prep Bot</div>
+          <div class="mc-body" style="margin-top:.3rem;line-height:1.6">Upload your entire semester notes into Pinecone. Build a personal study chatbot that answers questions from your <em>own</em> study material. No hallucination — only from your notes.</div>
+        </div>
+        <div class="mini-card" style="--mc-accent:var(--p2)">
+          <div class="mc-title">🛎 Support Chatbot</div>
+          <div class="mc-body" style="margin-top:.3rem;line-height:1.6">Load a company's product manual or FAQ document. Build a customer support chatbot that answers accurately — grounded in the actual documentation.</div>
+        </div>
+        <div class="mini-card" style="--mc-accent:var(--p5)">
+          <div class="mc-title">🔬 Research Assistant</div>
+          <div class="mc-body" style="margin-top:.3rem;line-height:1.6">Load research papers on a topic. Build an assistant that discusses findings, compares papers, and suggests related concepts — all grounded in the actual documents.</div>
+        </div>
+      </div>
+      <div class="hl-box reveal"><div class="hl-text">These are <strong>real products</strong>. Each can be built in a weekend using free tools. Every project here has job-ready portfolio value.</div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 43: PART 7 DIVIDER ==================== -->
+<section class="slide divider" id="s43" style="--dbg:#d4f0d8;--daccent:#3a7a4a">
+  <div class="dcard">
+    <div class="dpart reveal">Part 7</div>
+    <div class="dtitle reveal">Mindset Shift</div>
+    <div class="dsub reveal">The 50% Rule, Vibe Coding Warning, and the Learning Roadmap</div>
+    <span class="dtime reveal">12 minutes</span>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 44: OLD vs NEW ENGINEER ==================== -->
+<section class="slide" id="s44" style="--accent:#3a7a4a">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">7.1 — The Shift</div>
+      <div class="heading reveal">Old Engineer vs New Engineer</div>
+      <div class="two-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--light)">
+          <div class="mc-title" style="color:var(--muted)">📟 Old Engineer (2020)</div>
+          <ul class="blist" style="margin-top:.4rem">
+            <li>Writes every line of code manually</li>
+            <li>Speed = lines of code per day</li>
+            <li>Value = fastest typist</li>
+            <li>Spends 80% on implementation</li>
+            <li>20% on architecture and thinking</li>
+          </ul>
+        </div>
+        <div class="mini-card" style="--mc-accent:var(--p4)">
+          <div class="mc-title">🚀 New Engineer (2026)</div>
+          <ul class="blist" style="margin-top:.4rem">
+            <li>Directs AI agents to write code</li>
+            <li>Speed = quality of thinking and prompts</li>
+            <li>Value = <strong>deepest thinker</strong></li>
+            <li>Spends 80% on architecture</li>
+            <li>20% reviewing AI output</li>
+          </ul>
+        </div>
+      </div>
+      <div class="quote reveal">"This shift does not mean engineers are no longer needed. It means the nature of engineering has changed. The best engineers today are not the fastest coders. They are the <strong>deepest thinkers</strong>."</div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 45: THE 50% RULE ==================== -->
+<section class="slide" id="s45" style="--accent:#3a7a4a">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">7.2 — The Rule</div>
+      <div class="heading reveal">The 50% Rule</div>
+      <div class="hl-box reveal"><div class="hl-text" style="font-size:clamp(.9rem,1.8vw,1.3rem)">"The engineer of the agentic AI era should be able to <strong>write and understand at least 50% of what AI produces</strong>. Not everything from scratch — but enough to read it, catch bugs, and fix what breaks."</div></div>
+      <ul class="blist reveal">
+        <li><strong>AI makes mistakes.</strong> It writes code that compiles but is logically wrong. Only someone who understands the code can catch this.</li>
+        <li><strong>Bugs happen at 2 AM.</strong> If you do not understand the code your agent wrote, you cannot fix it under production pressure.</li>
+        <li><strong>Security vulnerabilities exist in AI code.</strong> Only a developer with strong fundamentals will spot SQL injection, auth bypasses, and data leaks.</li>
+      </ul>
+      <div class="body-text reveal" style="color:var(--p4);font-weight:700">"AI tools make a good developer 10× more powerful. They make a bad developer 10× more dangerous. Your foundations are your protection."</div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 46: VIBE CODING WARNING ==================== -->
+<section class="slide" id="s46" style="--accent:#c04060">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">7.3 — Warning ⚠️</div>
+      <div class="heading reveal">The Vibe Coding Trap</div>
+      <div class="body-text reveal"><strong>Vibe coding</strong> = copy-paste AI-generated code into production without reading it, without understanding it, without testing it — just because it <em>looked right</em>.</div>
+      <ul class="blist reveal">
+        <li><strong>Technical debt accumulates silently.</strong> The code works today, fails mysteriously six months later, and nobody knows why — including you.</li>
+        <li><strong>Security holes get shipped.</strong> AI code can introduce SQL injection, authentication bypasses, and data leaks — all of which look clean on the surface.</li>
+        <li><strong>You cannot debug what you do not understand.</strong> When something breaks in a complex system, you need the mental model to trace the problem.</li>
+      </ul>
+      <div class="warn-box reveal"><div style="font-size:var(--tb);font-weight:700;color:var(--text);line-height:1.6">⚠️ "I am not saying do not use AI to write code — I use it every single day. I am saying: <em>understand what it writes</em>. Read it. Question it. Own it. Your name is on that code, not the AI's."<br><br>A JCB machine did not replace civil engineers. It replaced the <strong>shovel</strong>. <em>You are the engineer who designs the building.</em></div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 47: FREE LEARNING STACK ==================== -->
+<section class="slide" id="s47" style="--accent:#3a7a4a">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">7.4 — Start Today</div>
+      <div class="heading reveal">Your Free Learning Stack</div>
+      <div class="two-col reveal">
+        <ul class="blist">
+          <li><strong>Claude.ai / ChatGPT / Gemini</strong> — Free LLMs for daily experimentation</li>
+          <li><strong>Google Colab</strong> — Free GPU for running ML code in the browser</li>
+          <li><strong>ChromaDB + LangChain + Gemini API</strong> — Free stack for your first RAG agent</li>
+          <li><strong>n8n.io</strong> — Free visual workflow automation (self-hosted)</li>
+        </ul>
+        <ul class="blist">
+          <li><strong>Pinecone</strong> — Free starter tier for cloud vector storage</li>
+          <li><strong>Hugging Face Spaces</strong> — Free deployment for AI applications</li>
+          <li><strong>GitHub</strong> — Free version control and portfolio building</li>
+          <li><strong>Ollama</strong> — Free local model runner — GPT-4 quality, zero API cost</li>
+        </ul>
+      </div>
+      <div class="hl-box reveal"><div class="hl-text">The knowledge to use these tools is freely available. What separates leaders from followers is the <strong>willingness to build a strong foundation</strong> and then use it to reach higher.</div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 48: 12-MONTH ROADMAP ==================== -->
+<section class="slide" id="s48" style="--accent:#3a7a4a">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">7.4b — Roadmap</div>
+      <div class="heading reveal">12 Months to Job-Ready</div>
+      <div class="road-grid reveal">
+        <div class="road-card" style="--rc-c:var(--p2)">
+          <div class="rc-phase">Months 1–3</div>
+          <div class="rc-items"><strong>Foundations</strong><br>Python fluency · Git · APIs · Prompt engineering · Build 2 small CLI projects</div>
+        </div>
+        <div class="road-card" style="--rc-c:var(--p3)">
+          <div class="rc-phase">Months 4–6</div>
+          <div class="rc-items"><strong>AI Stack</strong><br>LangChain · ChromaDB · RAG pipeline · Build a real chatbot · Deploy on Hugging Face</div>
+        </div>
+        <div class="road-card" style="--rc-c:var(--p5)">
+          <div class="rc-phase">Months 7–9</div>
+          <div class="rc-items"><strong>Agents</strong><br>Multi-step agents · n8n workflows · CrewAI · Build an automation that saves real time</div>
+        </div>
+        <div class="road-card" style="--rc-c:var(--p6)">
+          <div class="rc-phase">Months 10–12</div>
+          <div class="rc-items"><strong>Portfolio</strong><br>3 full projects on GitHub · Blog or video about what you built · Apply for internships</div>
+        </div>
+      </div>
+      <div class="body-text reveal" style="color:var(--p4);font-weight:600;margin-top:.3rem">💡 The only tool you need to start is a laptop and a free Gemini API key.</div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 49: THE ONE PROJECT CHALLENGE ==================== -->
+<section class="slide" id="s49" style="--accent:#3a7a4a">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">7.5 — Your Challenge</div>
+      <div class="heading reveal">The One Project Challenge</div>
+      <div class="body-text reveal">Before you leave today, think of <strong>one problem in your daily life</strong> that is repetitive, annoying, and takes your time:</div>
+      <div class="three-col reveal">
+        <div class="mini-card" style="--mc-accent:var(--p1)"><div class="mc-title">📧 Email</div><div class="mc-body">Summarising your email every morning? Build an agent that reads it and drafts replies.</div></div>
+        <div class="mini-card" style="--mc-accent:var(--p2)"><div class="mc-title">📝 Notes</div><div class="mc-body">Keeping lecture notes organised? Build a RAG chatbot that answers questions from your notes.</div></div>
+        <div class="mini-card" style="--mc-accent:var(--p3)"><div class="mc-title">📱 Content</div><div class="mc-body">Generating social media content for your college club? Build what Demo 1 showed — tonight.</div></div>
+      </div>
+      <div class="hl-box reveal"><div class="hl-text">Start simple. Use free tools. It does not need to be perfect. <strong>Build it. Ship it. Use it.</strong><br>That one project will teach you more than six months of reading about AI.</div></div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 50: CLOSING DIVIDER ==================== -->
+<section class="slide divider" id="s50" style="--dbg:#fce8e8;--daccent:#c03050">
+  <div class="dcard">
+    <div class="dpart reveal">Closing</div>
+    <div class="dtitle reveal">The Message<br>That Must Stay</div>
+    <div class="dsub reveal">Step away from the laptop. Stand at the front. No slides.</div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 51: THREE STATEMENTS ==================== -->
+<section class="slide" id="s51" style="--accent:#c03050">
+  <div class="card">
+    <div class="card-inner">
+      <div class="label reveal">Closing — Three Statements</div>
+      <div class="heading reveal">What You Must Remember</div>
+      <div class="slide-body">
+        <div class="mini-card reveal" style="--mc-accent:var(--p1)">
+          <div class="mc-title">🔑 Superpower Has Shifted</div>
+          <div class="mc-body" style="line-height:1.7">"Ten years ago, <strong>knowing how to write code</strong> was a superpower. Five years ago, <strong>knowing machine learning</strong> was a superpower. Today — <strong>knowing how to think clearly, design systems intelligently, and orchestrate AI agents effectively</strong> is the superpower."</div>
+        </div>
+        <div class="mini-card reveal" style="--mc-accent:var(--p3)">
+          <div class="mc-title">🌟 Access is Equal. Foundation is Not.</div>
+          <div class="mc-body" style="line-height:1.7">"The tools I showed you today are all free or nearly free. The knowledge to use them is freely available. What separates the engineers who lead from the ones who follow is not access to tools. It is the <strong>willingness to build a strong foundation and then use that foundation to reach higher</strong>."</div>
+        </div>
+        <div class="mini-card reveal" style="--mc-accent:var(--p5)">
+          <div class="mc-title">⚡ The Age Has Already Arrived</div>
+          <div class="mc-body" style="line-height:1.7">"The age of agentic AI is not coming. It is already here. You are living inside it right now. The only question that remains is — <strong>do you want to be the one building it, or the one trying to catch up with it?</strong>"</div>
+        </div>
+      </div>
+    </div>
+    <div class="pills"><div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div><div class="pill p4"></div><div class="pill p5"></div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 52: THANK YOU ==================== -->
+<section class="slide closing-slide" id="s52">
+  <div class="closing-card reveal-scale">
+    <div style="font-size:clamp(2.5rem,6vw,5rem);font-weight:800;color:var(--text)" class="reveal">Thank You</div>
+    <div style="font-size:clamp(1rem,2vw,1.5rem);color:var(--muted);font-style:italic" class="reveal">Happy to take your questions</div>
+    <div style="width:60px;height:4px;background:linear-gradient(90deg,var(--p1),var(--p3),var(--p5));border-radius:2px" class="reveal"></div>
+    <div style="display:flex;flex-direction:column;gap:.5rem;align-items:center" class="reveal">
+      <div style="font-size:var(--tb);font-weight:700;color:var(--text)">Kartik Joshi</div>
+      <div style="font-size:var(--ts);color:var(--muted)">BVB College of Engineering, Hubli</div>
+      <div style="font-size:var(--ts);color:var(--muted)">joshikartik9844@gmail.com</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center" class="reveal">
+      <span class="badge bpink">🧠 Brain</span>
+      <span class="badge bmint">💾 Memory</span>
+      <span class="badge blav">⚡ Actions</span>
+      <span class="badge bpeach">🤖 Agentic AI</span>
+    </div>
+    <div style="font-size:var(--ts);color:var(--light);margin-top:.5rem" class="reveal">Navigate: ← → Arrow Keys  ·  Space  ·  Scroll  ·  Press E to edit text</div>
+  </div>
+</section>
+
+<!-- ==================== EDITING UI ==================== -->
+<div class="edit-hotzone" id="editHotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Edit mode (E)">✏️</button>
+<div class="edit-banner" id="editBanner">✏️ Edit Mode — Click any text to edit · Ctrl+S to save</div>
+
+<script>
+/* ============================================
+   SLIDE PRESENTATION CONTROLLER
+   ============================================ */
+class SlidePresentation {
+  constructor() {
+    this.slides = document.querySelectorAll('.slide');
+    this.total = this.slides.length;
+    this.current = 0;
+    this.progress = document.getElementById('progress');
+    this.counter = document.getElementById('counter');
+    this.navContainer = null;
+    this.setupObserver();
+    this.setupKeyboard();
+    this.setupTouch();
+    this.setupScroll();
+    this.updateUI(0);
+  }
+
+  updateUI(idx) {
+    this.current = idx;
+    const pct = this.total > 1 ? (idx / (this.total - 1)) * 100 : 0;
+    this.progress.style.width = pct + '%';
+    this.counter.textContent = (idx + 1) + ' / ' + this.total;
+  }
+
+  goTo(idx) {
+    if (idx < 0 || idx >= this.total) return;
+    this.slides[idx].scrollIntoView({ behavior: 'smooth' });
+    this.updateUI(idx);
+  }
+
+  setupObserver() {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          const idx = Array.from(this.slides).indexOf(e.target);
+          if (idx !== -1) this.updateUI(idx);
+        }
+      });
+    }, { threshold: 0.5 });
+    this.slides.forEach(s => obs.observe(s));
+  }
+
+  setupKeyboard() {
+    document.addEventListener('keydown', e => {
+      if (e.target.getAttribute && e.target.getAttribute('contenteditable')) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault(); this.goTo(this.current + 1);
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault(); this.goTo(this.current - 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault(); this.goTo(0);
+      } else if (e.key === 'End') {
+        e.preventDefault(); this.goTo(this.total - 1);
+      }
+    });
+  }
+
+  setupTouch() {
+    let startY = 0, startX = 0;
+    document.addEventListener('touchstart', e => {
+      startY = e.touches[0].clientY;
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const dy = startY - e.changedTouches[0].clientY;
+      const dx = startX - e.changedTouches[0].clientX;
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 40) {
+        this.goTo(this.current + (dy > 0 ? 1 : -1));
+      }
+    }, { passive: true });
+  }
+
+  setupScroll() {
+    let busy = false;
+    document.addEventListener('wheel', e => {
+      if (busy) return;
+      busy = true;
+      this.goTo(this.current + (e.deltaY > 0 ? 1 : -1));
+      setTimeout(() => busy = false, 800);
+    }, { passive: true });
+  }
+}
+
+/* ============================================
+   INLINE EDITOR
+   ============================================ */
+class InlineEditor {
+  constructor() {
+    this.isActive = false;
+    this.toggle = document.getElementById('editToggle');
+    this.banner = document.getElementById('editBanner');
+    this.hotzone = document.getElementById('editHotzone');
+    this.hideTimeout = null;
+
+    // Hotzone hover
+    this.hotzone.addEventListener('mouseenter', () => {
+      clearTimeout(this.hideTimeout);
+      this.toggle.classList.add('show');
+    });
+    this.hotzone.addEventListener('mouseleave', () => {
+      this.hideTimeout = setTimeout(() => {
+        if (!this.isActive) this.toggle.classList.remove('show');
+      }, 400);
+    });
+    this.toggle.addEventListener('mouseenter', () => clearTimeout(this.hideTimeout));
+    this.toggle.addEventListener('mouseleave', () => {
+      this.hideTimeout = setTimeout(() => {
+        if (!this.isActive) this.toggle.classList.remove('show');
+      }, 400);
+    });
+
+    this.hotzone.addEventListener('click', () => this.toggleEditMode());
+    this.toggle.addEventListener('click', () => this.toggleEditMode());
+
+    document.addEventListener('keydown', e => {
+      if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) {
+        this.toggleEditMode();
+      }
+      if (e.ctrlKey && e.key === 's' && this.isActive) {
+        e.preventDefault(); this.exportFile();
+      }
+    });
+  }
+
+  toggleEditMode() {
+    this.isActive = !this.isActive;
+    document.body.classList.toggle('edit-active', this.isActive);
+    this.toggle.classList.toggle('active', this.isActive);
+    this.toggle.textContent = this.isActive ? '✅' : '✏️';
+    this.banner.classList.toggle('active', this.isActive);
+
+    const editable = document.querySelectorAll(
+      '.main-title,.main-sub,.heading,.label,.body-text,.blist li,.mc-title,.mc-body,.gc-title,.gc-body,.c-title,.c-desc,.tri-name,.tri-ex,.tbl td,.tl-text,.quote,.hl-text,.tbox-examples,.dtitle,.dsub,.rc-items,.reveal'
+    );
+    editable.forEach(el => {
+      if (this.isActive) el.setAttribute('contenteditable', 'true');
+      else el.removeAttribute('contenteditable');
+    });
+  }
+
+  exportFile() {
+    const editables = Array.from(document.querySelectorAll('[contenteditable]'));
+    editables.forEach(el => el.removeAttribute('contenteditable'));
+    document.body.classList.remove('edit-active');
+    this.toggle.classList.remove('active', 'show');
+    this.banner.classList.remove('active');
+
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+    document.body.classList.add('edit-active');
+    editables.forEach(el => el.setAttribute('contenteditable', 'true'));
+    this.toggle.classList.add('active');
+    this.banner.classList.add('active');
+
+    const blob = new Blob([html], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'Agentic_AI_Presentation.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+}
+
+const pres = new SlidePresentation();
+const editor = new InlineEditor();
+</script>
+</body>
+</html>
